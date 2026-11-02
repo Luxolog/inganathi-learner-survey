@@ -95,15 +95,6 @@ const $=id=>document.getElementById(id);
 const endpoint='https://script.google.com/macros/s/AKfycbw0jyBDr7fGySDZIGzaumIPzxYbeyFZHdxSxj5XToO-t_qvHBe8dEFYzAMBltRean6NHw/exec';
 function toggle(id,show){$(id).classList.toggle('hidden',!show)}
 function required(id,on){$(id).required=!!on;if(!on)$(id).value=''}
-function setSupportOptions(){
-const stage=$('licenceStage').value;if(stage!=='Learner test booked')$('testDate').value='';let opts=['Learner licence preparation','Driving lessons','Booking / test guidance','Licence renewal guidance','Licence code upgrade','General guidance'];
-if(stage==='No learner licence'||stage==='Preparing for learner test')opts=['Learner licence preparation',"Booking the learner's licence test",'Understanding licence requirements','General guidance'];
-if(stage==='Learner test booked')opts=["Preparing for my booked learner's licence test",'Driving lessons','Understanding next steps','General guidance'];
-if(stage==='Passed learner test')opts=['Starting practical driving lessons','Continuing driving lessons',"Preparing for the driver's test",'General guidance'];
-if(stage==='Learner licence expired')opts=['Learner licence renewal guidance',"Preparing to retake the learner's licence test","Booking a new learner's licence test",'General guidance'];
-if(stage==='Already licensed')opts=['Upgrading to another licence code','Professional driving lessons','Understanding licence requirements','General guidance'];
-const select=$('supportNeed'),previous=select.value;select.innerHTML='<option value="">Choose one</option>'+opts.map(x=>'<option>'+x+'</option>').join('');if(opts.includes(previous))select.value=previous;
-}
 function conditional(){
 const reason=$('mainReason').value;toggle('workPurposeField',reason==='Work or career requirement');required('workPurpose',reason==='Work or career requirement');toggle('businessPurposeField',reason==='Business operations');required('businessPurpose',reason==='Business operations');
 const age=$('ageGroup').value,minor=age==='Under 18';toggle('guardianFields',minor);required('guardianName',minor);required('guardianPhone',minor);$('guardianConsent').required=minor;if(!minor)$('guardianConsent').checked=false;
@@ -116,15 +107,16 @@ document.querySelector('label[for="companyName"]').textContent=employment==='Sel
 if(!work){$('jobTitle').value='';$('companyName').value=''}
 toggle('otherSituationField',other);required('otherSituation',other);
 const stage=$('licenceStage').value;
-const showTarget=['No learner licence','Preparing for learner test','Learner test booked','Passed learner test','Learner licence expired','Already licensed'].includes(stage);
-toggle('targetCodeField',showTarget);required('targetCode',showTarget);
-const showTime=['No learner licence','Preparing for learner test'].includes(stage);
+const showTime=['No learner licence','Studying for learner test'].includes(stage);
 toggle('timeframeField',showTime);required('timeframe',showTime);
-toggle('testDateField',stage==='Learner test booked');
-toggle('practicalField',stage==='Passed learner test');required('practicalStatus',stage==='Passed learner test');
+toggle('practicalField',stage==='Valid learner licence certificate');required('practicalStatus',stage==='Valid learner licence certificate');
 toggle('expiredField',stage==='Learner licence expired');required('expiredSupport',stage==='Learner licence expired');
-toggle('currentCodeField',stage==='Already licensed');required('currentCode',stage==='Already licensed');
-setSupportOptions();
+const hasLicence=$('hasDriversLicence').value,hasYes=hasLicence==='Yes',hasNo=hasLicence==='No';
+toggle('upgradeField',hasYes);required('wantsUpgrade',hasYes);
+const upgrade=$('wantsUpgrade').value,needsCode=hasNo||(hasYes&&upgrade==='Yes');
+toggle('targetCodeField',needsCode);required('targetCode',needsCode);
+const contactYes=$('contactConsent').value==='Yes';toggle('contactMethodsField',contactYes);
+if(!contactYes)document.querySelectorAll('input[name="contactMethods"]').forEach(el=>el.checked=false);
 }
 $('mainReason').addEventListener('change',()=>{
 const reason=$('mainReason').value;
@@ -133,7 +125,7 @@ toggle('businessPurposeField',reason==='Business operations');
 required('workPurpose',reason==='Work or career requirement');
 required('businessPurpose',reason==='Business operations');
 });
-['ageGroup','employmentStatus','licenceStage'].forEach(id=>$(id).addEventListener('change',conditional));
+['ageGroup','employmentStatus','licenceStage','hasDriversLicence','wantsUpgrade','contactConsent'].forEach(id=>$(id).addEventListener('change',conditional));
 function isVisible(el){return !el.closest('.hidden')&&!el.disabled}
 function validStep(){conditional();for(const el of steps[current].querySelectorAll('input,select,textarea')){if(isVisible(el)&&!el.checkValidity()){el.reportValidity();return false}}return true}
 function render(){steps.forEach((s,i)=>s.classList.toggle('hidden',i!==current));progress.style.width=((current+1)*25)+'%';back.disabled=current===0;next.classList.toggle('hidden',current===3);submit.classList.toggle('hidden',current!==3);error.textContent='';conditional();window.scrollTo({top:0,behavior:'smooth'})}
@@ -142,7 +134,8 @@ function resetSurvey(){if(resetTimer)clearTimeout(resetTimer);form.reset();curre
 $('startAgain').addEventListener('click',resetSurvey);
 form.addEventListener('submit',async e=>{
 e.preventDefault();if(!validStep())return;
-const data=Object.fromEntries(new FormData(form).entries());data.consent=$('consent').checked;data.guardianConsent=$('guardianConsent').checked;data.submittedAt=new Date().toISOString();
+const data=Object.fromEntries(new FormData(form).entries());data.contactMethods=[...form.querySelectorAll('input[name="contactMethods"]:checked')].map(el=>el.value);data.marketingConsent=$('marketingConsent').checked;data.consent=$('consent').checked;data.guardianConsent=$('guardianConsent').checked;data.submittedAt=new Date().toISOString();
+if(data.contactConsent==='Yes'&&data.contactMethods.length===0){error.textContent='Please select at least one permitted contact method.';submit.disabled=false;submit.textContent='Submit survey';return;}
 submit.disabled=true;submit.textContent='Submitting…';error.textContent='';
 try{
 await fetch(endpoint,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(data)});
