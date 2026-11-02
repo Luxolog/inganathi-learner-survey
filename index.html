@@ -73,6 +73,8 @@ input:focus,select:focus,textarea:focus{outline:2px solid #e3061330;border-color
 <section class="step hidden" data-step="3"><div class="step-label">Step 4 of 4 · How we can help</div><h2>What matters most to you?</h2>
 <div class="field"><label for="mainReason">What is your main reason for obtaining or upgrading a driver's licence? *</label><select id="mainReason" name="mainReason" required><option value="">Choose one</option><option>Personal transport and independence</option><option>Work or career requirement</option><option>Business operations</option><option>Family responsibilities</option><option>Professional development / licence upgrade</option><option>Other</option></select></div>
 <div class="field"><label for="supportNeed">What support would you like from Inganathi? *</label><select id="supportNeed" name="supportNeed" required><option value="">Choose one</option></select></div>
+<div id="workPurposeField" class="hidden"><div class="field"><label for="workPurpose">What type of work requires this licence? *</label><select id="workPurpose" name="workPurpose"><option value="">Choose one</option><option>Professional driving</option><option>Delivery / dispatch</option><option>Security work</option><option>Field work / client visits</option><option>General employment requirement</option><option>Other</option></select></div></div>
+<div id="businessPurposeField" class="hidden"><div class="field"><label for="businessPurpose">How will a driver's licence support your business? *</label><select id="businessPurpose" name="businessPurpose"><option value="">Choose one</option><option>Delivering goods or products</option><option>Transporting equipment or materials</option><option>Visiting clients or suppliers</option><option>Operating a business vehicle</option><option>Other</option></select></div></div>
 <div class="field"><label for="contactPreference">How would you prefer us to contact you? *</label><select id="contactPreference" name="contactPreference" required><option value="">Choose one</option><option>WhatsApp</option><option>Phone call</option><option>SMS</option><option>Email</option></select></div>
 <div class="field"><label for="referralSource">How did you hear about Inganathi? (optional)</label><select id="referralSource" name="referralSource"><option value="">Select one</option><option>WhatsApp</option><option>Facebook</option><option>TikTok</option><option>Friend / family</option><option>School / college</option><option>Community event</option><option>Other</option></select></div>
 <div class="field"><label class="choice"><input type="checkbox" name="consent" id="consent" required><span>I agree that Inganathi Driving Academy may use my answers to understand my needs and contact me about the driving services or information I have requested. *</span></label><p class="hint">Your information will be used for this survey and relevant follow-up by Inganathi Driving Academy.</p></div>
@@ -113,6 +115,13 @@ toggle('expiredField',stage==='Learner licence expired');required('expiredSuppor
 toggle('currentCodeField',stage==='Already licensed');required('currentCode',stage==='Already licensed');
 setSupportOptions();
 }
+$('mainReason').addEventListener('change',()=>{
+const reason=$('mainReason').value;
+toggle('workPurposeField',reason==='Work or career requirement');
+toggle('businessPurposeField',reason==='Business operations');
+required('workPurpose',reason==='Work or career requirement');
+required('businessPurpose',reason==='Business operations');
+});
 ['ageGroup','employmentStatus','licenceStage'].forEach(id=>$(id).addEventListener('change',conditional));
 function isVisible(el){return !el.closest('.hidden')&&!el.disabled}
 function validStep(){conditional();for(const el of steps[current].querySelectorAll('input,select,textarea')){if(isVisible(el)&&!el.checkValidity()){el.reportValidity();return false}}return true}
