@@ -106,7 +106,7 @@ toggle('studentFields',student);required('institutionType',student);required('in
 toggle('workFields',work);required('workSector',work);if(!work){$('jobTitle').value='';$('companyName').value=''}
 toggle('otherSituationField',other);required('otherSituation',other);
 const stage=$('licenceStage').value;
-const showTarget=['No learner licence','Preparing for learner test','Learner test booked','Passed learner test','Learner licence expired'].includes(stage);
+const showTarget=['No learner licence','Preparing for learner test','Learner test booked','Passed learner test','Learner licence expired','Already licensed'].includes(stage);
 toggle('targetCodeField',showTarget);required('targetCode',showTarget);
 const showTime=['No learner licence','Preparing for learner test'].includes(stage);
 toggle('timeframeField',showTime);required('timeframe',showTime);
