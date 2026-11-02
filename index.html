@@ -93,7 +93,7 @@ function setSupportOptions(){
 const stage=$('licenceStage').value;if(stage!=='Learner test booked')$('testDate').value='';let opts=['Learner licence preparation','Driving lessons','Booking / test guidance','Licence renewal guidance','Licence code upgrade','General guidance'];
 if(stage==='No learner licence'||stage==='Preparing for learner test')opts=['Learner licence preparation','Booking the learner test','Understanding licence requirements','General guidance'];
 if(stage==='Learner test booked')opts=['Preparing for my booked learner test','Driving lessons','Understanding next steps','General guidance'];
-if(stage==='Passed learner test')opts=['Starting practical driving lessons','Continuing driving lessons','Preparing for the driver's test','General guidance'];
+if(stage==='Passed learner test')opts=['Starting practical driving lessons','Continuing driving lessons',"Preparing for the driver's test",'General guidance'];
 if(stage==='Learner licence expired')opts=['Learner licence renewal guidance','Preparing to retake the learner test','Booking a new learner test','General guidance'];
 if(stage==='Already licensed')opts=['Upgrading to another licence code','Professional driving lessons','Understanding licence requirements','General guidance'];
 const select=$('supportNeed'),previous=select.value;select.innerHTML='<option value="">Choose one</option>'+opts.map(x=>'<option>'+x+'</option>').join('');if(opts.includes(previous))select.value=previous;
