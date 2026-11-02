@@ -90,7 +90,7 @@ const endpoint='https://script.google.com/macros/s/AKfycbz8AjhoJmMr_oBqKgPK69hVx
 function toggle(id,show){$(id).classList.toggle('hidden',!show)}
 function required(id,on){$(id).required=!!on;if(!on)$(id).value=''}
 function setSupportOptions(){
-const stage=$('licenceStage').value;let opts=['Learner licence preparation','Driving lessons','Booking / test guidance','Licence renewal guidance','Licence code upgrade','General guidance'];
+const stage=$('licenceStage').value;if(stage!=='Learner test booked')$('testDate').value='';let opts=['Learner licence preparation','Driving lessons','Booking / test guidance','Licence renewal guidance','Licence code upgrade','General guidance'];
 if(stage==='No learner licence'||stage==='Preparing for learner test')opts=['Learner licence preparation','Booking the learner test','Understanding licence requirements','General guidance'];
 if(stage==='Learner test booked')opts=['Preparing for my booked learner test','Driving lessons','Understanding next steps','General guidance'];
 if(stage==='Passed learner test')opts=['Starting practical driving lessons','Continuing driving lessons','Preparing for the driver's test','General guidance'];
@@ -99,10 +99,11 @@ if(stage==='Already licensed')opts=['Upgrading to another licence code','Profess
 const select=$('supportNeed'),previous=select.value;select.innerHTML='<option value="">Choose one</option>'+opts.map(x=>'<option>'+x+'</option>').join('');if(opts.includes(previous))select.value=previous;
 }
 function conditional(){
+const reason=$('mainReason').value;toggle('workPurposeField',reason==='Work or career requirement');required('workPurpose',reason==='Work or career requirement');toggle('businessPurposeField',reason==='Business operations');required('businessPurpose',reason==='Business operations');
 const age=$('ageGroup').value,minor=age==='Under 18';toggle('guardianFields',minor);required('guardianName',minor);required('guardianPhone',minor);$('guardianConsent').required=minor;if(!minor)$('guardianConsent').checked=false;
 const employment=$('employmentStatus').value,student=employment==='Student',work=['Employed','Self-employed'].includes(employment),other=employment==='Other';
 toggle('studentFields',student);required('institutionType',student);required('institutionName',student);
-toggle('workFields',work);required('workSector',work);
+toggle('workFields',work);required('workSector',work);if(!work){$('jobTitle').value='';$('companyName').value=''}
 toggle('otherSituationField',other);required('otherSituation',other);
 const stage=$('licenceStage').value;
 const showTarget=['No learner licence','Preparing for learner test','Learner test booked','Passed learner test','Learner licence expired'].includes(stage);
