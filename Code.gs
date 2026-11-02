@@ -1,11 +1,16 @@
 const SHEET_NAME = 'Survey Responses';
 const SPREADSHEET_NAME = 'Inganathi Learner Survey Responses';
 const NOTIFICATION_EMAIL = 'info@uvanofinserv.co.za';
+
 const HEADERS = [
   'Timestamp', 'Full name', 'Mobile number', 'Email', 'Area', 'Age group',
-  'Employment status', 'Institution name', 'Work sector', 'Company name',
-  "Learner's licence status", "Driver's licence status", 'Licence interested in',
-  'Licence for work', 'Support needed', 'Referral source', 'Consent'
+  'Employment status', 'Institution type', 'Institution name', 'Work sector',
+  'Job title', 'Company name', "Learner's licence status", "Driver's licence status",
+  'Licence interested in', 'Licence for work', 'Start timeframe', 'Learner test date',
+  'Practical driving lessons status', 'Expired learner licence support',
+  'Main reason for licence', 'Support needed', 'Preferred contact method',
+  'Referral source', 'Parent / guardian name', 'Parent / guardian mobile',
+  'Parent / guardian permission', 'Consent'
 ];
 
 function setupInganathiSurvey() {
@@ -22,7 +27,7 @@ function setupInganathiSurvey() {
   let sheet = spreadsheet.getSheetByName(SHEET_NAME);
   if (!sheet) sheet = spreadsheet.getSheets()[0].setName(SHEET_NAME);
 
-  // Refresh the columns while preserving any responses already collected.
+  // Preserve existing responses by matching old column headings to the new schema.
   const lastRow = sheet.getLastRow();
   const lastCol = Math.max(sheet.getLastColumn(), 1);
   let oldHeaders = [];
@@ -48,7 +53,7 @@ function setupInganathiSurvey() {
     sheet.getRange(2, 1, migratedRows.length, HEADERS.length).setValues(migratedRows);
   }
   sheet.setFrozenRows(1);
-  sheet.getRange(1, 1, 1, HEADERS.length).setFontWeight('bold');
+  sheet.getRange(1, 1, 1, HEADERS.length).setFontWeight('bold').setBackground('#080a12').setFontColor('#ffffff');
   sheet.autoResizeColumns(1, HEADERS.length);
 
   Logger.log('Survey spreadsheet: ' + spreadsheet.getUrl());
@@ -66,9 +71,13 @@ function doGet() {
 function doPost(e) {
   try {
     const data = JSON.parse((e.postData && e.postData.contents) || '{}');
-    if (!data.fullName || !data.phone || !data.area || !data.consent) {
-      throw new Error('Missing required fields');
+    if (!data.fullName || !data.phone || !data.area || !data.ageGroup || !data.employmentStatus || !data.licenceStage || !data.mainReason || !data.supportNeed || !data.contactPreference || !data.consent) {
+      throw new Error('One or more required survey fields are missing.');
     }
+    if (data.ageGroup === 'Under 18' && (!data.guardianName || !data.guardianPhone || !data.guardianConsent)) {
+      throw new Error('Parent or guardian permission is required for respondents under 18.');
+    }
+
     const id = PropertiesService.getScriptProperties().getProperty('SURVEY_SPREADSHEET_ID');
     if (!id) throw new Error('Run setupInganathiSurvey() before deploying the web app.');
     const spreadsheet = SpreadsheetApp.openById(id);
@@ -76,13 +85,37 @@ function doPost(e) {
     if (!sheet) throw new Error('Survey responses sheet is missing. Run setupInganathiSurvey().');
 
     const timestamp = new Date();
-    sheet.appendRow([
-      timestamp, data.fullName, data.phone, data.email || '', data.area,
-      data.ageGroup || '', data.employmentStatus || '', data.institutionName || '',
-      data.workSector || '', data.companyName || '', data.learnerStatus || '',
-      data.driverStatus || '', data.licenceInterest || '', data.licenceUse || '',
-      data.supportNeed || '', data.referralSource || '', data.consent ? 'Yes' : 'No'
-    ]);
+    const row = [
+      timestamp,
+      data.fullName,
+      data.phone,
+      data.email || '',
+      data.area,
+      data.ageGroup,
+      data.employmentStatus,
+      data.institutionType || '',
+      data.institutionName || '',
+      data.workSector || '',
+      data.jobTitle || '',
+      data.companyName || '',
+      data.licenceStage || '',
+      data.currentCode || '',
+      data.targetCode || '',
+      '', // The survey no longer asks whether a licence is needed for work.
+      data.timeframe || '',
+      data.testDate || '',
+      data.practicalStatus || '',
+      data.expiredSupport || '',
+      data.mainReason || '',
+      data.supportNeed || '',
+      data.contactPreference || '',
+      data.referralSource || '',
+      data.guardianName || '',
+      data.guardianPhone || '',
+      data.guardianConsent ? 'Yes' : 'No',
+      data.consent ? 'Yes' : 'No'
+    ];
+    sheet.appendRow(row);
 
     const subject = 'New Inganathi Learner Survey response';
     const body = [
@@ -92,17 +125,28 @@ function doPost(e) {
       'Mobile: ' + data.phone,
       'Email: ' + (data.email || 'Not provided'),
       'Area: ' + data.area,
-      'Age group: ' + (data.ageGroup || 'Not provided'),
-      'Employment: ' + (data.employmentStatus || 'Not provided'),
-      'Institution: ' + (data.institutionName || 'Not provided'),
-      'Work sector: ' + (data.workSector || 'Not applicable'),
-      'Company: ' + (data.companyName || 'Not provided'),
-      "Learner's licence: " + (data.learnerStatus || 'Not provided'),
-      "Driver's licence currently held: " + (data.driverStatus || 'Not applicable'),
-      "Driver's licence interested in: " + (data.licenceInterest || 'Not applicable'),
-      'Licence for work: ' + (data.licenceUse || 'Not applicable'),
-      'Support needed: ' + (data.supportNeed || 'Not provided'),
-      'Survey source: ' + (data.referralSource || 'Not provided'),
+      'Age group: ' + data.ageGroup,
+      'Employment situation: ' + data.employmentStatus,
+      'Institution type: ' + (data.institutionType || 'Not applicable'),
+      'Institution: ' + (data.institutionName || 'Not applicable'),
+      'Work / business sector: ' + (data.workSector || 'Not applicable'),
+      'Role: ' + (data.jobTitle || 'Not provided'),
+      'Company / business: ' + (data.companyName || 'Not provided'),
+      'Licensing position: ' + data.licenceStage,
+      'Current driver's licence code: ' + (data.currentCode || 'Not applicable'),
+      'Target driver's licence code: ' + (data.targetCode || 'Not applicable'),
+      'Preferred start timeframe: ' + (data.timeframe || 'Not provided'),
+      'Learner test date: ' + (data.testDate || 'Not provided'),
+      'Practical lessons: ' + (data.practicalStatus || 'Not applicable'),
+      'Expired learner licence support: ' + (data.expiredSupport || 'Not applicable'),
+      'Main reason: ' + data.mainReason,
+      'Support requested: ' + data.supportNeed,
+      'Preferred contact: ' + data.contactPreference,
+      'Referral source: ' + (data.referralSource || 'Not provided'),
+      'Parent / guardian: ' + (data.guardianName || 'Not applicable'),
+      'Parent / guardian mobile: ' + (data.guardianPhone || 'Not applicable'),
+      'Parent / guardian permission: ' + (data.guardianConsent ? 'Yes' : 'Not applicable'),
+      'Consent: ' + (data.consent ? 'Yes' : 'No'),
       '',
       'Submitted: ' + timestamp.toString(),
       'Spreadsheet: ' + spreadsheet.getUrl()
