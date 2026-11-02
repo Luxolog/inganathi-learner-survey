@@ -103,7 +103,11 @@ const reason=$('mainReason').value;toggle('workPurposeField',reason==='Work or c
 const age=$('ageGroup').value,minor=age==='Under 18';toggle('guardianFields',minor);required('guardianName',minor);required('guardianPhone',minor);$('guardianConsent').required=minor;if(!minor)$('guardianConsent').checked=false;
 const employment=$('employmentStatus').value,student=employment==='Student',work=['Employed','Self-employed'].includes(employment),other=employment==='Other';
 toggle('studentFields',student);required('institutionType',student);required('institutionName',student);
-toggle('workFields',work);required('workSector',work);if(!work){$('jobTitle').value='';$('companyName').value=''}
+toggle('workFields',work);required('workSector',work);
+document.querySelector('label[for="workSector"]').textContent=employment==='Self-employed'?'Which sector or industry does your business operate in? *':'Which sector or industry do you work in? *';
+document.querySelector('label[for="jobTitle"]').textContent=employment==='Self-employed'?'Your role in the business (optional)':'Your role / occupation (optional)';
+document.querySelector('label[for="companyName"]').textContent=employment==='Self-employed'?'Business name (optional)':'Company / organisation name (optional)';
+if(!work){$('jobTitle').value='';$('companyName').value=''}
 toggle('otherSituationField',other);required('otherSituation',other);
 const stage=$('licenceStage').value;
 const showTarget=['No learner licence','Preparing for learner test','Learner test booked','Passed learner test','Learner licence expired','Already licensed'].includes(stage);
