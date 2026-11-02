@@ -8,7 +8,7 @@ const HEADERS = [
   'Job title', 'Company name', "Learner's licence status", "Driver's licence status",
   'Licence interested in', 'Licence for work', 'Start timeframe', 'Learner test date',
   'Practical driving lessons status', 'Expired learner licence support',
-  'Main reason for licence', 'Support needed', 'Preferred contact method',
+  'Main reason for licence', 'Work purpose', 'Business purpose', 'Support needed', 'Preferred contact method',
   'Referral source', 'Parent / guardian name', 'Parent / guardian mobile',
   'Parent / guardian permission', 'Consent'
 ];
@@ -107,6 +107,8 @@ function doPost(e) {
       data.practicalStatus || '',
       data.expiredSupport || '',
       data.mainReason || '',
+      data.workPurpose || '',
+      data.businessPurpose || '',
       data.supportNeed || '',
       data.contactPreference || '',
       data.referralSource || '',
@@ -140,6 +142,8 @@ function doPost(e) {
       'Practical lessons: ' + (data.practicalStatus || 'Not applicable'),
       'Expired learner licence support: ' + (data.expiredSupport || 'Not applicable'),
       'Main reason: ' + data.mainReason,
+      'Work purpose: ' + (data.workPurpose || 'Not applicable'),
+      'Business purpose: ' + (data.businessPurpose || 'Not applicable'),
       'Support requested: ' + data.supportNeed,
       'Preferred contact: ' + data.contactPreference,
       'Referral source: ' + (data.referralSource || 'Not provided'),
