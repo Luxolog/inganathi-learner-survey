@@ -60,28 +60,34 @@ input:focus,select:focus,textarea:focus{outline:2px solid #e3061330;border-color
 <div id="otherSituationField" class="hidden"><div class="field"><label for="otherSituation">Please describe your current situation *</label><input id="otherSituation" name="otherSituation" placeholder="Briefly tell us"></div></div>
 </section>
 
-<section class="step hidden" data-step="2"><div class="step-label">Step 3 of 4 · Licence journey</div><h2>Where are you in your driving journey?</h2><p class="intro">Your answer determines the next questions, so we only ask what is relevant.</p>
-<div class="field"><label for="licenceStage">Which best describes your current licensing position? *</label><select id="licenceStage" name="licenceStage" required><option value="">Choose one</option><option value="No learner licence">I do not have a learner's licence yet</option><option value="Preparing for learner test">I am preparing for the learner's licence test</option><option value="Learner test booked">My learner's licence test is booked</option><option value="Passed learner test">I have passed the learner's licence test / hold a valid learner's licence certificate</option><option value="Learner licence expired">My learner's licence has expired</option><option value="Already licensed">I already hold a driver's licence and want to upgrade or add a code</option></select></div>
-<div id="targetCodeField" class="hidden"><div class="field"><label for="targetCode">Which driver's licence code are you interested in? *</label><select id="targetCode" name="targetCode"><option value="">Choose a code</option><option>Code A1 / A – Motorcycle</option><option>Code B / Code 8 – Light motor vehicle</option><option>Code C1 / Code 10 – Light / medium goods vehicle</option><option>Code EC / Code 14 – Heavy motor vehicle</option><option>Not sure – I need guidance</option></select></div></div>
+<section class="step hidden" data-step="2"><div class="step-label">Step 3 of 4 · Licence journey</div><h2>Where are you in your driving journey?</h2><p class="intro">Your answers help us understand the right next step for you.</p>
+<div class="field"><label for="licenceStage">Which best describes your learner's licence status? *</label><select id="licenceStage" name="licenceStage" required><option value="">Choose one</option><option value="No learner licence">I do not have a learner's licence yet</option><option value="Studying for learner test">I am currently studying for my learner's licence test</option><option value="Valid learner licence certificate">I have a valid learner's licence certificate</option><option value="Learner licence expired">My learner's licence has since expired</option></select></div>
 <div id="timeframeField" class="hidden"><div class="field"><label for="timeframe">When would you ideally like to start? *</label><select id="timeframe" name="timeframe"><option value="">Choose a timeframe</option><option>As soon as possible</option><option>Within 1–3 months</option><option>Within 3–6 months</option><option>Just exploring my options</option></select></div></div>
-<div id="testDateField" class="hidden"><div class="field"><label for="testDate">When is your learner's licence test booked? (optional)</label><input id="testDate" name="testDate" type="date"></div></div>
 <div id="practicalField" class="hidden"><div class="field"><label for="practicalStatus">Have you started practical driving lessons? *</label><select id="practicalStatus" name="practicalStatus"><option value="">Choose one</option><option>Yes, currently taking lessons</option><option>Not yet, I need to start</option><option>I have completed lessons</option><option>I need help deciding</option></select></div></div>
-<div id="expiredField" class="hidden"><div class="field"><label for="expiredSupport">What would you like help with? *</label><select id="expiredSupport" name="expiredSupport"><option value="">Choose one</option><option>Guidance on renewing my learner's licence</option><option>Preparing to retake the learner's licence test</option><option>Booking a new learner's licence test</option><option>I'm not sure – please guide me</option></select></div></div>
-<div id="currentCodeField" class="hidden"><div class="field"><label for="currentCode">Which driver's licence code do you currently hold? *</label><select id="currentCode" name="currentCode"><option value="">Choose current code</option><option>Code A1 / A – Motorcycle</option><option>Code B / Code 8 – Light motor vehicle</option><option>Code C1 / Code 10 – Light / medium goods vehicle</option><option>Code EC / Code 14 – Heavy motor vehicle</option><option>Other / not sure</option></select></div></div>
+<div id="expiredField" class="hidden"><div class="field"><label for="expiredSupport">What guidance do you need? *</label><select id="expiredSupport" name="expiredSupport"><option value="">Choose one</option><option>Where do I start obtaining a learner's licence certificate and driver's licence?</option><option>I'm not sure – please guide me</option></select></div></div>
+<div class="field"><label for="hasDriversLicence">Do you already have a driver's licence? *</label><select id="hasDriversLicence" name="hasDriversLicence" required><option value="">Choose one</option><option value="Yes">Yes</option><option value="No">No</option></select></div>
+<div id="upgradeField" class="hidden"><div class="field"><label for="wantsUpgrade">Would you like to upgrade your driver's licence? *</label><select id="wantsUpgrade" name="wantsUpgrade"><option value="">Choose one</option><option value="Yes">Yes</option><option value="No">No</option></select></div></div>
+<div id="targetCodeField" class="hidden"><div class="field"><label for="targetCode">Which driver's licence code are you interested in obtaining? *</label><select id="targetCode" name="targetCode"><option value="">Choose a code</option><option>A</option><option>A1</option><option>B</option><option>C1</option><option>EB</option><option>EC1</option><option>EC</option><option>I'm not sure – please guide me</option></select></div></div>
 </section>
 
-<section class="step hidden" data-step="3"><div class="step-label">Step 4 of 4 · How we can help</div><h2>What matters most to you?</h2>
-<div class="field"><label for="mainReason">What is your main reason for obtaining or upgrading a driver's licence? *</label><select id="mainReason" name="mainReason" required><option value="">Choose one</option><option>Personal transport and independence</option><option>Work or career requirement</option><option>Business operations</option><option>Family responsibilities</option><option>Professional development / licence upgrade</option><option>Other</option></select></div>
-<div class="field"><label for="supportNeed">What support would you like from Inganathi? *</label><select id="supportNeed" name="supportNeed" required><option value="">Choose one</option></select></div>
+<section class="step hidden" data-step="3"><div class="step-label">Step 4 of 4 · How we can help</div><h2>How can Inganathi assist you?</h2>
+<div class="field"><label for="mainReason">Why do you need a driver's licence? *</label><select id="mainReason" name="mainReason" required><option value="">Choose one</option><option>Personal transport and independence</option><option>Work or career requirement</option><option>Business operations</option><option>Family responsibilities</option><option>Professional development / licence upgrade</option><option>Other</option></select></div>
 <div id="workPurposeField" class="hidden"><div class="field"><label for="workPurpose">What type of work requires this licence? *</label><select id="workPurpose" name="workPurpose"><option value="">Choose one</option><option>Professional driving</option><option>Delivery / dispatch</option><option>Security work</option><option>Field work / client visits</option><option>General employment requirement</option><option>Other</option></select></div></div>
 <div id="businessPurposeField" class="hidden"><div class="field"><label for="businessPurpose">How will a driver's licence support your business? *</label><select id="businessPurpose" name="businessPurpose"><option value="">Choose one</option><option>Delivering goods or products</option><option>Transporting equipment or materials</option><option>Visiting clients or suppliers</option><option>Operating a business vehicle</option><option>Other</option></select></div></div>
-<div class="field"><label for="contactPreference">How would you prefer us to contact you? *</label><select id="contactPreference" name="contactPreference" required><option value="">Choose one</option><option>WhatsApp</option><option>Phone call</option><option>SMS</option><option>Email</option></select></div>
+<div class="field"><label for="heardOfAcademy">Have you heard of Inganathi Driving Academy before? *</label><select id="heardOfAcademy" name="heardOfAcademy" required><option value="">Choose one</option><option>Yes</option><option>No</option></select></div>
+<div class="field"><label for="contactConsent">Do you give Inganathi Driving Academy permission to contact you about your enquiry? *</label><select id="contactConsent" name="contactConsent" required><option value="">Choose one</option><option value="Yes">Yes</option><option value="No">No</option></select></div>
+<div id="contactMethodsField" class="hidden"><fieldset class="field" style="border:0;padding:0;margin:0"><legend class="legend">Which contact methods do you give us permission to use? *</legend>
+<label class="choice"><input type="checkbox" name="contactMethods" value="WhatsApp"><span>WhatsApp</span></label>
+<label class="choice"><input type="checkbox" name="contactMethods" value="Email"><span>Email</span></label>
+<label class="choice"><input type="checkbox" name="contactMethods" value="SMS"><span>SMS</span></label>
+<label class="choice"><input type="checkbox" name="contactMethods" value="Phone call"><span>Phone call</span></label></fieldset></div>
 <div class="field"><label for="referralSource">How did you hear about Inganathi? (optional)</label><select id="referralSource" name="referralSource"><option value="">Select one</option><option>WhatsApp</option><option>Facebook</option><option>TikTok</option><option>Friend / family</option><option>School / college</option><option>Community event</option><option>Other</option></select></div>
-<div class="field"><label class="choice"><input type="checkbox" name="consent" id="consent" required><span>I agree that Inganathi Driving Academy may use my answers to understand my needs and contact me about the driving services or information I have requested. *</span></label><p class="hint">Your information will be used for this survey and relevant follow-up by Inganathi Driving Academy.</p></div>
+<div class="field"><label class="choice"><input type="checkbox" name="marketingConsent" id="marketingConsent"><span>I give Inganathi Driving Academy permission to share marketing material with me through its social media channels. (Optional)</span></label></div>
+<div class="field"><label class="choice"><input type="checkbox" name="consent" id="consent" required><span>I confirm that the information I have provided is accurate and consent to Inganathi Driving Academy processing my survey information for the purposes explained above. *</span></label><p class="hint">This consent is separate from your optional marketing preference.</p></div>
 </section>
 <div class="error" id="error" role="alert"></div><div class="actions"><button type="button" class="secondary" id="back" disabled>Back</button><button type="button" class="primary" id="next">Continue</button><button type="submit" class="primary hidden" id="submit">Submit survey</button></div>
 </form></section>
-<section class="panel success hidden" id="success"><svg class="success-mark" viewBox="0 0 100 100" role="img" aria-label="Inganathi U logo"><circle cx="50" cy="50" r="46" fill="#080a12" stroke="#e30613" stroke-width="5"/><path d="M31 24h12v34c0 12 5 19 16 19s16-7 16-19V24h12v34c0 19-10 31-28 31S31 77 31 58z" fill="#fff"/></svg><h2>Thank you for choosing Inganathi.</h2><p>Your response has been submitted. We appreciate your time. Our team will follow up using your preferred contact method where relevant.</p><p class="hint">This survey will return to the first screen shortly.</p><button type="button" class="primary" id="startAgain">Start a new survey</button></section>
+<section class="panel success hidden" id="success"><svg class="success-mark" viewBox="0 0 100 100" role="img" aria-label="Inganathi U logo"><circle cx="50" cy="50" r="46" fill="#080a12" stroke="#e30613" stroke-width="5"/><path d="M31 24h12v34c0 12 5 19 16 19s16-7 16-19V24h12v34c0 19-10 31-28 31S31 77 31 58z" fill="#fff"/></svg><h2>Thank you for choosing Inganathi.</h2><p>Your response has been submitted. We appreciate your time. If you gave permission to be contacted, our team will use the methods you selected.</p><p class="hint">This survey will return to the first screen shortly.</p><button type="button" class="primary" id="startAgain">Start a new survey</button></section>
 </main>
 <script>
 const form=document.getElementById('surveyForm'),steps=[...document.querySelectorAll('.step')],progress=document.getElementById('progress'),back=document.getElementById('back'),next=document.getElementById('next'),submit=document.getElementById('submit'),error=document.getElementById('error');let current=0,resetTimer=null;
@@ -89,15 +95,6 @@ const $=id=>document.getElementById(id);
 const endpoint='https://script.google.com/macros/s/AKfycbw0jyBDr7fGySDZIGzaumIPzxYbeyFZHdxSxj5XToO-t_qvHBe8dEFYzAMBltRean6NHw/exec';
 function toggle(id,show){$(id).classList.toggle('hidden',!show)}
 function required(id,on){$(id).required=!!on;if(!on)$(id).value=''}
-function setSupportOptions(){
-const stage=$('licenceStage').value;if(stage!=='Learner test booked')$('testDate').value='';let opts=['Learner licence preparation','Driving lessons','Booking / test guidance','Licence renewal guidance','Licence code upgrade','General guidance'];
-if(stage==='No learner licence'||stage==='Preparing for learner test')opts=['Learner licence preparation','Booking the learner's licence test','Understanding licence requirements','General guidance'];
-if(stage==='Learner test booked')opts=['Preparing for my booked learner's licence test','Driving lessons','Understanding next steps','General guidance'];
-if(stage==='Passed learner test')opts=['Starting practical driving lessons','Continuing driving lessons',"Preparing for the driver's test",'General guidance'];
-if(stage==='Learner licence expired')opts=['Learner licence renewal guidance','Preparing to retake the learner's licence test','Booking a new learner's licence test','General guidance'];
-if(stage==='Already licensed')opts=['Upgrading to another licence code','Professional driving lessons','Understanding licence requirements','General guidance'];
-const select=$('supportNeed'),previous=select.value;select.innerHTML='<option value="">Choose one</option>'+opts.map(x=>'<option>'+x+'</option>').join('');if(opts.includes(previous))select.value=previous;
-}
 function conditional(){
 const reason=$('mainReason').value;toggle('workPurposeField',reason==='Work or career requirement');required('workPurpose',reason==='Work or career requirement');toggle('businessPurposeField',reason==='Business operations');required('businessPurpose',reason==='Business operations');
 const age=$('ageGroup').value,minor=age==='Under 18';toggle('guardianFields',minor);required('guardianName',minor);required('guardianPhone',minor);$('guardianConsent').required=minor;if(!minor)$('guardianConsent').checked=false;
@@ -110,15 +107,16 @@ document.querySelector('label[for="companyName"]').textContent=employment==='Sel
 if(!work){$('jobTitle').value='';$('companyName').value=''}
 toggle('otherSituationField',other);required('otherSituation',other);
 const stage=$('licenceStage').value;
-const showTarget=['No learner licence','Preparing for learner test','Learner test booked','Passed learner test','Learner licence expired','Already licensed'].includes(stage);
-toggle('targetCodeField',showTarget);required('targetCode',showTarget);
-const showTime=['No learner licence','Preparing for learner test'].includes(stage);
+const showTime=['No learner licence','Studying for learner test'].includes(stage);
 toggle('timeframeField',showTime);required('timeframe',showTime);
-toggle('testDateField',stage==='Learner test booked');
-toggle('practicalField',stage==='Passed learner test');required('practicalStatus',stage==='Passed learner test');
+toggle('practicalField',stage==='Valid learner licence certificate');required('practicalStatus',stage==='Valid learner licence certificate');
 toggle('expiredField',stage==='Learner licence expired');required('expiredSupport',stage==='Learner licence expired');
-toggle('currentCodeField',stage==='Already licensed');required('currentCode',stage==='Already licensed');
-setSupportOptions();
+const hasLicence=$('hasDriversLicence').value,hasYes=hasLicence==='Yes',hasNo=hasLicence==='No';
+toggle('upgradeField',hasYes);required('wantsUpgrade',hasYes);
+const upgrade=$('wantsUpgrade').value,needsCode=hasNo||(hasYes&&upgrade==='Yes');
+toggle('targetCodeField',needsCode);required('targetCode',needsCode);
+const contactYes=$('contactConsent').value==='Yes';toggle('contactMethodsField',contactYes);
+if(!contactYes)document.querySelectorAll('input[name="contactMethods"]').forEach(el=>el.checked=false);
 }
 $('mainReason').addEventListener('change',()=>{
 const reason=$('mainReason').value;
@@ -127,7 +125,7 @@ toggle('businessPurposeField',reason==='Business operations');
 required('workPurpose',reason==='Work or career requirement');
 required('businessPurpose',reason==='Business operations');
 });
-['ageGroup','employmentStatus','licenceStage'].forEach(id=>$(id).addEventListener('change',conditional));
+['ageGroup','employmentStatus','licenceStage','hasDriversLicence','wantsUpgrade','contactConsent'].forEach(id=>$(id).addEventListener('change',conditional));
 function isVisible(el){return !el.closest('.hidden')&&!el.disabled}
 function validStep(){conditional();for(const el of steps[current].querySelectorAll('input,select,textarea')){if(isVisible(el)&&!el.checkValidity()){el.reportValidity();return false}}return true}
 function render(){steps.forEach((s,i)=>s.classList.toggle('hidden',i!==current));progress.style.width=((current+1)*25)+'%';back.disabled=current===0;next.classList.toggle('hidden',current===3);submit.classList.toggle('hidden',current!==3);error.textContent='';conditional();window.scrollTo({top:0,behavior:'smooth'})}
@@ -136,7 +134,8 @@ function resetSurvey(){if(resetTimer)clearTimeout(resetTimer);form.reset();curre
 $('startAgain').addEventListener('click',resetSurvey);
 form.addEventListener('submit',async e=>{
 e.preventDefault();if(!validStep())return;
-const data=Object.fromEntries(new FormData(form).entries());data.consent=$('consent').checked;data.guardianConsent=$('guardianConsent').checked;data.submittedAt=new Date().toISOString();
+const data=Object.fromEntries(new FormData(form).entries());data.contactMethods=[...form.querySelectorAll('input[name="contactMethods"]:checked')].map(el=>el.value);data.marketingConsent=$('marketingConsent').checked;data.consent=$('consent').checked;data.guardianConsent=$('guardianConsent').checked;data.submittedAt=new Date().toISOString();
+if(data.contactConsent==='Yes'&&data.contactMethods.length===0){error.textContent='Please select at least one permitted contact method.';submit.disabled=false;submit.textContent='Submit survey';return;}
 submit.disabled=true;submit.textContent='Submitting…';error.textContent='';
 try{
 await fetch(endpoint,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(data)});
