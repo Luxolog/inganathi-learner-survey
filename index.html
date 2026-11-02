@@ -92,7 +92,7 @@ input:focus,select:focus,textarea:focus{outline:2px solid #e3061330;border-color
 <script>
 const form=document.getElementById('surveyForm'),steps=[...document.querySelectorAll('.step')],progress=document.getElementById('progress'),back=document.getElementById('back'),next=document.getElementById('next'),submit=document.getElementById('submit'),error=document.getElementById('error');let current=0,resetTimer=null;
 const $=id=>document.getElementById(id);
-const endpoint='https://script.google.com/macros/s/AKfycbw0jyBDr7fGySDZIGzaumIPzxYbeyFZHdxSxj5XToO-t_qvHBe8dEFYzAMBltRean6NHw/exec';
+const endpoint='https://script.google.com/macros/s/AKfycbzVAjH_OgiKw-S7aj4xZimMT15bgDRJ-dJjDOIaTmsvqv_Yt3oUBLkcke5M2qaXQwayFA/exec';
 function toggle(id,show){$(id).classList.toggle('hidden',!show)}
 function required(id,on){$(id).required=!!on;if(!on)$(id).value=''}
 function conditional(){
