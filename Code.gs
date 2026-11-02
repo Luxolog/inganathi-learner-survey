@@ -10,7 +10,9 @@ const HEADERS = [
   'Practical driving lessons status', 'Expired learner licence support',
   'Main reason for licence', 'Work purpose', 'Business purpose', 'Support needed', 'Preferred contact method',
   'Referral source', 'Parent / guardian name', 'Parent / guardian mobile',
-  'Parent / guardian permission', 'Consent'
+  'Parent / guardian permission', 'Consent',
+  "Has driver's licence?", 'Wants licence upgrade?', 'Heard of Inganathi before?',
+  'Permission to contact', 'Permitted contact methods', 'Marketing consent – social media'
 ];
 
 function setupInganathiSurvey() {
@@ -71,8 +73,9 @@ function doGet() {
 function doPost(e) {
   try {
     const data = JSON.parse((e.postData && e.postData.contents) || '{}');
-    if (!data.fullName || !data.phone || !data.area || !data.ageGroup || !data.employmentStatus || !data.licenceStage || !data.mainReason || !data.supportNeed || !data.contactPreference || !data.consent) {
+    if (!data.fullName || !data.phone || !data.area || !data.ageGroup || !data.employmentStatus || !data.licenceStage || !data.hasDriversLicence || !data.mainReason || !data.heardOfAcademy || !data.contactConsent || !data.consent) {
       throw new Error('One or more required survey fields are missing.');
+    if (data.contactConsent === 'Yes' && (!data.contactMethods || !data.contactMethods.length)) throw new Error('Select at least one permitted contact method.');
     }
     if (data.ageGroup === 'Under 18' && (!data.guardianName || !data.guardianPhone || !data.guardianConsent)) {
       throw new Error('Parent or guardian permission is required for respondents under 18.');
@@ -115,7 +118,13 @@ function doPost(e) {
       data.guardianName || '',
       data.guardianPhone || '',
       data.guardianConsent ? 'Yes' : 'No',
-      data.consent ? 'Yes' : 'No'
+      data.consent ? 'Yes' : 'No',
+      data.hasDriversLicence || '',
+      data.wantsUpgrade || '',
+      data.heardOfAcademy || '',
+      data.contactConsent || '',
+      (data.contactMethods || []).join(', '),
+      data.marketingConsent ? 'Yes' : 'No'
     ];
     sheet.appendRow(row);
 
@@ -144,8 +153,10 @@ function doPost(e) {
       'Main reason: ' + data.mainReason,
       'Work purpose: ' + (data.workPurpose || 'Not applicable'),
       'Business purpose: ' + (data.businessPurpose || 'Not applicable'),
-      'Support requested: ' + data.supportNeed,
-      'Preferred contact: ' + data.contactPreference,
+      'Heard of Inganathi before: ' + data.heardOfAcademy,
+      'Permission to contact: ' + data.contactConsent,
+      'Permitted contact methods: ' + ((data.contactMethods || []).join(', ') || 'None selected'),
+      'Marketing consent – social media: ' + (data.marketingConsent ? 'Yes' : 'No'),
       'Referral source: ' + (data.referralSource || 'Not provided'),
       'Parent / guardian: ' + (data.guardianName || 'Not applicable'),
       'Parent / guardian mobile: ' + (data.guardianPhone || 'Not applicable'),
