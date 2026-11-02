@@ -17,7 +17,7 @@ h2{font-size:22px;margin:5px 0 18px}.field{margin:0 0 17px}label,.legend{display
 @media(max-width:520px){main{margin:0 auto;padding:0}.brand,.panel{border-radius:0}.panel{padding:20px}.choices{grid-template-columns:1fr}}
 </style></head>
 <body><main>
-<header class="brand"><small>Inganathi Driving Academy</small><h1>Learner & Opportunity Survey</h1><p>Help us understand your journey, work sector and opportunities. Takes about 3–5 minutes.</p></header>
+<header class="brand"><small>Inganathi Driving Academy</small><h1>Learner Survey</h1><p>Help us understand your learning journey, your work and your driving goals. Takes about 3–5 minutes.</p></header>
 <section class="panel" id="survey">
 <div class="progress"><span id="progress"></span></div>
 <form id="surveyForm">
@@ -27,35 +27,58 @@ h2{font-size:22px;margin:5px 0 18px}.field{margin:0 0 17px}label,.legend{display
 <div class="field"><label for="email">Email address (optional)</label><input id="email" name="email" type="email" autocomplete="email"></div>
 <div class="field"><label for="area">Town / area where you live *</label><input id="area" name="area" required placeholder="e.g. Soshanguve, Pretoria"></div>
 <div class="field"><label for="ageGroup">Age group *</label><select id="ageGroup" name="ageGroup" required><option value="">Select age group</option><option>Under 18</option><option>18–24</option><option>25–34</option><option>35–44</option><option>45–54</option><option>55+</option></select></div></section>
-<section class="step hidden" data-step="1"><div class="step-label">Step 2 of 4 · Work & sector</div><h2>Tell us about work</h2>
+<section class="step hidden" data-step="1"><div class="step-label">Step 2 of 4 · Work & sector</div><h2>Tell us about your current situation</h2>
 <div class="field"><label for="employmentStatus">Which best describes your current situation? *</label><select id="employmentStatus" name="employmentStatus" required><option value="">Choose one</option><option value="Employed">Employed</option><option value="Self-employed">Self-employed / business owner</option><option value="Unemployed">Unemployed / looking for work</option><option value="Student">Student / learner</option><option value="Other">Other</option></select></div>
+<div id="studentFields" class="hidden"><div class="field"><label for="institutionName">School / college / institution name *</label><input id="institutionName" name="institutionName" placeholder="Enter the name of your institution"></div></div>
 <div id="workFields" class="hidden">
-<div class="field"><label for="workSector">Which sector do you work in? *</label><select id="workSector" name="workSector"><option value="">Select sector</option><option>Retail</option><option>Manufacturing</option><option>Security</option><option>Transport & logistics</option><option>Hospitality & tourism</option><option>Construction</option><option>Healthcare</option><option>Education</option><option>Finance & administration</option><option>Government / public sector</option><option>Technology / communications</option><option>Agriculture</option><option>Other</option></select></div>
-<div class="field"><label for="companyName">Company / organisation name (optional)</label><input id="companyName" name="companyName" placeholder="Enter company name"></div></div>
-<div class="field"><label for="workInterest">Are you interested in hearing about job or recruitment opportunities? *</label><select id="workInterest" name="workInterest" required><option value="">Choose one</option><option>Yes</option><option>No</option></select></div></section>
+<div class="field"><label for="workSector">Which sector or industry do you work in? *</label><select id="workSector" name="workSector"><option value="">Select sector / industry</option><option>Retail</option><option>Manufacturing</option><option>Security</option><option>Transport & logistics</option><option>Hospitality & tourism</option><option>Construction</option><option>Healthcare</option><option>Education</option><option>Finance & administration</option><option>Government / public sector</option><option>Technology / communications</option><option>Agriculture</option><option>Other</option></select></div>
+<div class="field"><label for="companyName">Company / organisation name (optional)</label><input id="companyName" name="companyName" placeholder="Enter company name"></div></div></section>
 <section class="step hidden" data-step="2"><div class="step-label">Step 3 of 4 · Licence journey</div><h2>Where are you in your licence journey?</h2>
 <div class="field"><label for="learnerStatus">What is your learner's licence status? *</label><select id="learnerStatus" name="learnerStatus" required><option value="">Choose one</option><option value="No learner's licence yet">I don't have a learner's licence yet</option><option value="Preparing for learner's test">Preparing for the learner's test</option><option value="Booked learner's test">My learner's test is booked</option><option value="Passed learner's test">I have passed my learner's test</option><option value="Learner's licence expired">My learner's licence has expired</option></select></div>
-<div class="field" id="drivingField"><label for="driverStatus">Do you currently hold a driver's licence? *</label><select id="driverStatus" name="driverStatus"><option value="">Choose one</option><option>No, not yet</option><option>Yes, Code 8 / B</option><option>Yes, Code 10 / C1</option><option>Yes, Code 14 / EC</option><option>Yes, another code</option></select><p class="hint">If you only have a learner's licence, choose “No, not yet”.</p></div>
+<div class="field hidden" id="licenceInterestField"><label for="licenceInterest">Which driver's licence code are you interested in obtaining? *</label><select id="licenceInterest" name="licenceInterest"><option value="">Choose one</option><option>Code A1 / A – Motorcycle</option><option>Code B / Code 8 – Light motor vehicle</option><option>Code C1 / Code 10 – Light / medium goods vehicle</option><option>Code EC / Code 14 – Heavy motor vehicle</option><option>Not sure – I need guidance</option></select></div>
+<div class="field" id="drivingField"><label for="driverStatus">Do you currently hold a driver's licence? *</label><select id="driverStatus" name="driverStatus"><option value="">Choose one</option><option>No, not yet</option><option>Yes, Code 8 / B</option><option>Yes, Code 10 / C1</option><option>Yes, Code 14 / EC</option><option>Yes, another code</option></select></div>
 <div class="field hidden" id="licenceUseField"><label for="licenceUse">Do you want to use a driver's licence to secure work? *</label><select id="licenceUse" name="licenceUse"><option value="">Choose one</option><option>Yes</option><option>No</option><option>Not sure yet</option></select></div></section>
 <section class="step hidden" data-step="3"><div class="step-label">Step 4 of 4 · Your interests</div><h2>How can we support you?</h2>
-<div class="field"><label for="supportNeed">What support or information would help you most? *</label><select id="supportNeed" name="supportNeed" required><option value="">Choose one</option><option>Learner's licence preparation</option><option>Driving lessons</option><option>Driver's licence information</option><option>Job / recruitment opportunities</option><option>Referrals to opportunities</option><option>General information</option></select></div>
+<div class="field"><label for="supportNeed">What support or information would help you most? *</label><select id="supportNeed" name="supportNeed" required><option value="">Choose one</option><option>Learner's licence preparation</option><option>Driving lessons</option><option>Driver's licence information</option><option>Referrals to opportunities</option><option>General information</option></select></div>
 <div class="field"><label for="referralSource">How did you hear about this survey?</label><select id="referralSource" name="referralSource"><option value="">Select one (optional)</option><option>WhatsApp</option><option>Facebook</option><option>TikTok</option><option>Friend / family</option><option>Inganathi Driving Academy</option><option>Other</option></select></div>
 <div class="field"><label class="choice"><input type="checkbox" name="consent" id="consent" required><span>I agree that Inganathi Driving Academy may use my answers to understand learner needs and contact me about relevant services or opportunities. *</span></label><p class="hint">Please do not submit another person's personal information without their permission.</p></div></section>
 <div class="error" id="error" role="alert"></div><div class="actions"><button type="button" class="secondary" id="back" disabled>Back</button><button type="button" class="primary" id="next">Continue</button><button type="submit" class="primary hidden" id="submit">Submit survey</button></div>
 </form></section>
-<section class="panel success hidden" id="success"><h2>Thank you for taking part!</h2><p>Your response has been received. Your input helps us understand learner needs and connect people to opportunities.</p></section>
+<section class="panel success hidden" id="success"><h2>Thank you for taking part!</h2><p>Your response has been received. We appreciate your time and wish you well on your driving journey.</p><button type="button" class="primary" id="startAgain">Start a new survey</button></section>
 </main>
 <script>
 const form=document.getElementById('surveyForm'),steps=[...document.querySelectorAll('.step')],progress=document.getElementById('progress'),back=document.getElementById('back'),next=document.getElementById('next'),submit=document.getElementById('submit'),error=document.getElementById('error');let current=0;
 const $=id=>document.getElementById(id);
-function conditional(){const employed=['Employed','Self-employed'].includes($('employmentStatus').value);$('workFields').classList.toggle('hidden',!employed);$('workSector').required=employed;
-const learner=$('learnerStatus').value;const learnerOnly=learner==='Passed learner\'s test';$('drivingField').classList.toggle('hidden',learnerOnly);$('driverStatus').required=!learnerOnly;if(learnerOnly)$('driverStatus').value='';
-const driver=$('driverStatus').value;const showUse=!learnerOnly&&driver&&driver!=='No, not yet';$('licenceUseField').classList.toggle('hidden',!showUse);$('licenceUse').required=!!showUse;if(!showUse)$('licenceUse').value='';}
+function conditional(){
+const status=$('employmentStatus').value;
+const employed=['Employed','Self-employed'].includes(status);
+const student=status==='Student';
+$('workFields').classList.toggle('hidden',!employed);
+$('workSector').required=employed;
+$('studentFields').classList.toggle('hidden',!student);
+$('institutionName').required=student;
+if(!student)$('institutionName').value='';
+const learner=$('learnerStatus').value;
+const noLearner=learner==="No learner's licence yet";
+$('drivingField').classList.toggle('hidden',noLearner);
+$('driverStatus').required=!noLearner;
+if(noLearner)$('driverStatus').value='';
+$('licenceInterestField').classList.toggle('hidden',!noLearner);
+$('licenceInterest').required=noLearner;
+if(!noLearner)$('licenceInterest').value='';
+const driver=$('driverStatus').value;
+const showUse=!noLearner&&driver&&driver!=='No, not yet';
+$('licenceUseField').classList.toggle('hidden',!showUse);
+$('licenceUse').required=!!showUse;
+if(!showUse)$('licenceUse').value='';
+}
 $('employmentStatus').addEventListener('change',conditional);$('learnerStatus').addEventListener('change',conditional);$('driverStatus').addEventListener('change',conditional);
 function visible(el){return !el.closest('.hidden')&&!el.disabled}
 function validStep(){conditional();for(const el of steps[current].querySelectorAll('input,select')){if(visible(el)&&!el.checkValidity()){el.reportValidity();return false}}return true}
 function render(){steps.forEach((s,i)=>s.classList.toggle('hidden',i!==current));progress.style.width=((current+1)*25)+'%';back.disabled=current===0;next.classList.toggle('hidden',current===3);submit.classList.toggle('hidden',current!==3);error.textContent='';conditional();window.scrollTo({top:0,behavior:'smooth'})}
 back.onclick=()=>{if(current>0){current--;render()}};next.onclick=()=>{if(validStep()&&current<3){current++;render()}};
-form.addEventListener('submit',async e=>{e.preventDefault();if(!validStep())return;const data=Object.fromEntries(new FormData(form).entries());data.consent=$('consent').checked;data.submittedAt=new Date().toISOString();submit.disabled=true;submit.textContent='Submitting…';try{const endpoint='https://script.google.com/macros/s/AKfycbz8AjhoJmMr_oBqKgPK69hVxmFIIV9vhMgBb_4pAaNuHHlgfdN02rlZQvXwDzWF__tJ-Q/exec';if(!endpoint){localStorage.setItem('inganathi-survey-pending-'+Date.now(),JSON.stringify(data));throw new Error('Survey backend is not connected yet. Your response has been saved on this device; please contact the administrator before closing this page.')}await fetch(endpoint,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(data)});$('survey').classList.add('hidden');$('success').classList.remove('hidden')}catch(err){error.textContent=err.message;submit.disabled=false;submit.textContent='Submit survey'}});
+function resetSurvey(){form.reset();current=0;submit.disabled=false;submit.textContent='Submit survey';$('survey').classList.remove('hidden');$('success').classList.add('hidden');render();}
+$('startAgain').addEventListener('click',resetSurvey);
+form.addEventListener('submit',async e=>{e.preventDefault();if(!validStep())return;const data=Object.fromEntries(new FormData(form).entries());data.consent=$('consent').checked;data.submittedAt=new Date().toISOString();submit.disabled=true;submit.textContent='Submitting…';try{const endpoint='https://script.google.com/macros/s/AKfycbz8AjhoJmMr_oBqKgPK69hVxmFIIV9vhMgBb_4pAaNuHHlgfdN02rlZQvXwDzWF__tJ-Q/exec';if(!endpoint){throw new Error('Survey backend is not connected yet. Please contact the administrator before closing this page.')}await fetch(endpoint,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(data)});$('survey').classList.add('hidden');$('success').classList.remove('hidden');setTimeout(()=>{if(!$('success').classList.contains('hidden'))resetSurvey();},8000)}catch(err){error.textContent=err.message;submit.disabled=false;submit.textContent='Submit survey'}});
 render();
 </script></body></html>
