@@ -90,7 +90,7 @@ input:focus,select:focus,textarea:focus{outline:2px solid #e3061330;border-color
 <script>
 const form=document.getElementById('surveyForm'),steps=[...document.querySelectorAll('.step')],progress=document.getElementById('progress'),back=document.getElementById('back'),next=document.getElementById('next'),submit=document.getElementById('submit'),error=document.getElementById('error');let current=0,resetTimer=null;
 const $=id=>document.getElementById(id);
-const endpoint='https://script.google.com/macros/s/AKfycbznmfjrNWdfrfFoBMZS1xOV-eDcw1gWGsxHD4MXqDKgNbiR6SZP7u8dEKYSxICbQGwCzQ/exec';
+const endpoint='https://script.google.com/macros/s/AKfycbzCBISuBwGluMGJVpp2TS8_xc7JY1rbQTVI6_IoWTH7VT2E-BeyNkPSEiei9o3l3ey2XA/exec';
 function toggle(id,show){$(id).classList.toggle('hidden',!show)}
 function required(id,on){$(id).required=!!on;if(!on)$(id).value=''}
 function conditional(){
