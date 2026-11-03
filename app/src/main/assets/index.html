@@ -148,7 +148,7 @@ function resetSurvey(){if(resetTimer)clearTimeout(resetTimer);form.reset();curre
 $('startAgain').addEventListener('click',resetSurvey);
 form.addEventListener('submit',async e=>{
 e.preventDefault();if(!validStep())return;
-const data=Object.fromEntries(new FormData(form).entries());data.contactMethods=[...form.querySelectorAll('input[name="contactMethods"]:checked')].map(el=>el.value);data.marketingConsent=$('marketingConsent').checked;data.consent=$('consent').checked;data.guardianConsent=$('guardianConsent').checked;data.submittedAt=new Date().toISOString();
+const data=Object.fromEntries(new FormData(form).entries());data.hasDriversLicence=$('licenceStage').value==="Valid driver's licence"?'Yes':'No';data.contactMethods=[...form.querySelectorAll('input[name="contactMethods"]:checked')].map(el=>el.value);data.marketingConsent=$('marketingConsent').checked;data.consent=$('consent').checked;data.guardianConsent=$('guardianConsent').checked;data.submittedAt=new Date().toISOString();
 if(data.contactConsent==='Yes'&&data.contactMethods.length===0){error.textContent='Please select at least one permitted contact method.';submit.disabled=false;submit.textContent='Submit survey';return;}
 submit.disabled=true;submit.textContent='Submitting…';error.textContent='';
 try{
