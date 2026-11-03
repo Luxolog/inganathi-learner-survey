@@ -112,12 +112,25 @@ const hasLearner=stage==='Valid learner licence certificate';
 toggle('practicalField',hasLearner);required('practicalStatus',hasLearner);
 toggle('expiredField',stage==='Learner licence expired');required('expiredSupport',stage==='Learner licence expired');
 const hasValidDriver=stage==="Valid driver's licence";
-toggle('upgradeField',hasValidDriver);required('wantsUpgrade',hasValidDriver);
-const needsCode=hasValidDriver&&$('wantsUpgrade').value==='Yes';
-toggle('targetCodeField',needsCode);required('targetCode',needsCode);
+// Only a respondent who already holds a valid driver's licence sees the upgrade question.
+// Clear hidden answers so they cannot be submitted if the respondent changes their status.
+toggle('upgradeField',hasValidDriver);
+required('wantsUpgrade',hasValidDriver);
+if(!hasValidDriver)$('wantsUpgrade').value='';
 
-const contactYes=$('contactConsent').value==='Yes';toggle('contactMethodsField',contactYes);toggle('marketingConsentField',contactYes);
-if(!contactYes){document.querySelectorAll('input[name="contactMethods"]').forEach(el=>el.checked=false);$('marketingConsent').checked=false;}
+const needsCode=hasValidDriver&&$('wantsUpgrade').value==='Yes';
+toggle('targetCodeField',needsCode);
+required('targetCode',needsCode);
+if(!needsCode)$('targetCode').value='';
+
+// Marketing consent and contact-method choices are available only with contact permission.
+const contactYes=$('contactConsent').value==='Yes';
+toggle('contactMethodsField',contactYes);
+toggle('marketingConsentField',contactYes);
+if(!contactYes){
+  document.querySelectorAll('input[name="contactMethods"]').forEach(el=>el.checked=false);
+  $('marketingConsent').checked=false;
+}
 }
 $('mainReason').addEventListener('change',()=>{
 const reason=$('mainReason').value;
