@@ -61,11 +61,10 @@ input:focus,select:focus,textarea:focus{outline:2px solid #e3061330;border-color
 </section>
 
 <section class="step hidden" data-step="2"><div class="step-label">Step 3 of 4 · Licence journey</div><h2>Where are you in your driving journey?</h2><p class="intro">Your answers help us understand the right next step for you.</p>
-<div class="field"><label for="licenceStage">Which best describes your learner's licence status? *</label><select id="licenceStage" name="licenceStage" required><option value="">Choose one</option><option value="No learner licence">I do not have a learner's licence yet</option><option value="Studying for learner test">I am currently studying for my learner's licence test</option><option value="Valid learner licence certificate">I have a valid learner's licence certificate</option><option value="Learner licence expired">My learner's licence has since expired</option></select></div>
+<div class="field"><label for="licenceStage">Which best describes your learner's licence status? *</label><select id="licenceStage" name="licenceStage" required><option value="">Choose one</option><option value="No learner licence">I do not have a learner's licence yet</option><option value="Studying for learner test">I am currently studying for my learner's licence test</option><option value="Valid learner licence certificate">I have a valid learner's licence certificate</option><option value="Learner licence expired">My learner's licence has since expired</option><option value="Valid driver's licence">I have a valid driver's licence</option></select></div>
 <div id="timeframeField" class="hidden"><div class="field"><label for="timeframe">When would you ideally like to start? *</label><select id="timeframe" name="timeframe"><option value="">Choose a timeframe</option><option>As soon as possible</option><option>Within 1–3 months</option><option>Within 3–6 months</option><option>Just exploring my options</option></select></div></div>
 <div id="practicalField" class="hidden"><div class="field"><label for="practicalStatus">Have you started practical driving lessons? *</label><select id="practicalStatus" name="practicalStatus"><option value="">Choose one</option><option>Yes, currently taking lessons</option><option>Not yet, I need to start</option><option>I have completed lessons</option><option>I need help deciding</option></select></div></div>
 <div id="expiredField" class="hidden"><div class="field"><label for="expiredSupport">What guidance do you need? *</label><select id="expiredSupport" name="expiredSupport"><option value="">Choose one</option><option>Where do I start obtaining a learner's licence certificate and driver's licence?</option><option>I'm not sure – please guide me</option></select></div></div>
-<div class="field"><label for="hasDriversLicence">Do you already have a driver's licence? *</label><select id="hasDriversLicence" name="hasDriversLicence" required><option value="">Choose one</option><option value="Yes">Yes</option><option value="No">No</option></select></div>
 <div id="upgradeField" class="hidden"><div class="field"><label for="wantsUpgrade">Would you like to upgrade your driver's licence? *</label><select id="wantsUpgrade" name="wantsUpgrade"><option value="">Choose one</option><option value="Yes">Yes</option><option value="No">No</option></select></div></div>
 <div id="targetCodeField" class="hidden"><div class="field"><label for="targetCode">Which driver's licence code are you interested in obtaining? *</label><select id="targetCode" name="targetCode"><option value="">Choose a code</option><option>A</option><option>A1</option><option>B</option><option>C1</option><option>EB</option><option>EC1</option><option>EC</option><option>I'm not sure – please guide me</option></select></div></div>
 </section>
@@ -81,7 +80,7 @@ input:focus,select:focus,textarea:focus{outline:2px solid #e3061330;border-color
 <label class="choice"><input type="checkbox" name="contactMethods" value="Email"><span>Email</span></label>
 <label class="choice"><input type="checkbox" name="contactMethods" value="SMS"><span>SMS</span></label>
 <label class="choice"><input type="checkbox" name="contactMethods" value="Phone call"><span>Phone call</span></label></fieldset></div>
-<div class="field"><label class="choice"><input type="checkbox" name="marketingConsent" id="marketingConsent"><span>I give Inganathi Driving Academy permission to share marketing material with me through its social media channels. (Optional)</span></label></div>
+<div class="field hidden" id="marketingConsentField"><label class="choice"><input type="checkbox" name="marketingConsent" id="marketingConsent"><span>I give Inganathi Driving Academy permission to share marketing material with me through its social media channels. (Optional)</span></label></div>
 <div class="field"><label class="choice"><input type="checkbox" name="consent" id="consent" required><span>I confirm that the information I have provided is accurate and consent to Inganathi Driving Academy processing my survey information for the purposes explained above. *</span></label><p class="hint">This consent is separate from your optional marketing preference.</p></div>
 </section>
 <div class="error" id="error" role="alert"></div><div class="actions"><button type="button" class="secondary" id="back" disabled>Back</button><button type="button" class="primary" id="next">Continue</button><button type="submit" class="primary hidden" id="submit">Submit survey</button></div>
@@ -91,7 +90,7 @@ input:focus,select:focus,textarea:focus{outline:2px solid #e3061330;border-color
 <script>
 const form=document.getElementById('surveyForm'),steps=[...document.querySelectorAll('.step')],progress=document.getElementById('progress'),back=document.getElementById('back'),next=document.getElementById('next'),submit=document.getElementById('submit'),error=document.getElementById('error');let current=0,resetTimer=null;
 const $=id=>document.getElementById(id);
-const endpoint='https://script.google.com/macros/s/AKfycbzVAjH_OgiKw-S7aj4xZimMT15bgDRJ-dJjDOIaTmsvqv_Yt3oUBLkcke5M2qaXQwayFA/exec';
+const endpoint='https://script.google.com/macros/s/AKfycbzCBISuBwGluMGJVpp2TS8_xc7JY1rbQTVI6_IoWTH7VT2E-BeyNkPSEiei9o3l3ey2XA/exec';
 function toggle(id,show){$(id).classList.toggle('hidden',!show)}
 function required(id,on){$(id).required=!!on;if(!on)$(id).value=''}
 function conditional(){
@@ -108,14 +107,16 @@ toggle('otherSituationField',other);required('otherSituation',other);
 const stage=$('licenceStage').value;
 const showTime=['No learner licence','Studying for learner test'].includes(stage);
 toggle('timeframeField',showTime);required('timeframe',showTime);
-toggle('practicalField',stage==='Valid learner licence certificate');required('practicalStatus',stage==='Valid learner licence certificate');
+const hasLearner=stage==='Valid learner licence certificate';
+toggle('practicalField',hasLearner);required('practicalStatus',hasLearner);
 toggle('expiredField',stage==='Learner licence expired');required('expiredSupport',stage==='Learner licence expired');
-const hasLicence=$('hasDriversLicence').value,hasYes=hasLicence==='Yes',hasNo=hasLicence==='No';
-toggle('upgradeField',hasYes);required('wantsUpgrade',hasYes);
-const upgrade=$('wantsUpgrade').value,needsCode=hasNo||(hasYes&&upgrade==='Yes');
+const hasValidDriver=stage==="Valid driver's licence";
+toggle('upgradeField',hasValidDriver);required('wantsUpgrade',hasValidDriver);
+const needsCode=hasValidDriver&&$('wantsUpgrade').value==='Yes';
 toggle('targetCodeField',needsCode);required('targetCode',needsCode);
-const contactYes=$('contactConsent').value==='Yes';toggle('contactMethodsField',contactYes);
-if(!contactYes)document.querySelectorAll('input[name="contactMethods"]').forEach(el=>el.checked=false);
+
+const contactYes=$('contactConsent').value==='Yes';toggle('contactMethodsField',contactYes);toggle('marketingConsentField',contactYes);
+if(!contactYes){document.querySelectorAll('input[name="contactMethods"]').forEach(el=>el.checked=false);$('marketingConsent').checked=false;}
 }
 $('mainReason').addEventListener('change',()=>{
 const reason=$('mainReason').value;
@@ -124,7 +125,7 @@ toggle('businessPurposeField',reason==='Business operations');
 required('workPurpose',reason==='Work or career requirement');
 required('businessPurpose',reason==='Business operations');
 });
-['ageGroup','employmentStatus','licenceStage','hasDriversLicence','wantsUpgrade','contactConsent'].forEach(id=>$(id).addEventListener('change',conditional));
+['ageGroup','employmentStatus','licenceStage','wantsUpgrade','contactConsent'].forEach(id=>$(id).addEventListener('change',conditional));
 function isVisible(el){return !el.closest('.hidden')&&!el.disabled}
 function validStep(){conditional();for(const el of steps[current].querySelectorAll('input,select,textarea')){if(isVisible(el)&&!el.checkValidity()){el.reportValidity();return false}}return true}
 function render(){steps.forEach((s,i)=>s.classList.toggle('hidden',i!==current));progress.style.width=((current+1)*25)+'%';back.disabled=current===0;next.classList.toggle('hidden',current===3);submit.classList.toggle('hidden',current!==3);error.textContent='';conditional();window.scrollTo({top:0,behavior:'smooth'})}
