@@ -73,9 +73,20 @@ function doGet() {
 function doPost(e) {
   try {
     const data = JSON.parse((e.postData && e.postData.contents) || '{}');
-    if (!data.fullName || !data.phone || !data.area || !data.ageGroup || !data.employmentStatus || !data.licenceStage || !data.hasDriversLicence || !data.mainReason || !data.heardOfAcademy || !data.contactConsent || !data.consent) {
+    if (!data.fullName || !data.phone || !data.area || !data.ageGroup || !data.employmentStatus || !data.licenceStage || !data.mainReason || !data.heardOfAcademy || !data.contactConsent || !data.consent) {
       throw new Error('One or more required survey fields are missing.');
-    if (data.contactConsent === 'Yes' && (!data.contactMethods || !data.contactMethods.length)) throw new Error('Select at least one permitted contact method.');
+    }
+    if (data.contactConsent === 'Yes' && (!data.contactMethods || !data.contactMethods.length)) {
+      throw new Error('Select at least one permitted contact method.');
+    }
+    // Enforce the licence journey on the server as well as in the frontend.
+    const hasValidDriverLicence = data.licenceStage === "Valid driver's licence";
+    data.hasDriversLicence = hasValidDriverLicence ? 'Yes' : 'No';
+    if (!hasValidDriverLicence) data.wantsUpgrade = '';
+    if (!hasValidDriverLicence || data.wantsUpgrade !== 'Yes') data.targetCode = '';
+    if (data.contactConsent !== 'Yes') {
+      data.contactMethods = [];
+      data.marketingConsent = false;
     }
     if (data.ageGroup === 'Under 18' && (!data.guardianName || !data.guardianPhone || !data.guardianConsent)) {
       throw new Error('Parent or guardian permission is required for respondents under 18.');
