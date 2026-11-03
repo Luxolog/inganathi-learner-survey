@@ -79,6 +79,17 @@ function doPost(e) {
     if (data.contactConsent === 'Yes' && (!data.contactMethods || !data.contactMethods.length)) {
       throw new Error('Select at least one permitted contact method.');
     }
+    // Enforce licence-flow rules on the server.
+    const hasValidDriverLicence = data.licenceStage === "Valid driver's licence";
+    data.hasDriversLicence = hasValidDriverLicence ? 'Yes' : 'No';
+    if (!hasValidDriverLicence) data.wantsUpgrade = '';
+    if (!hasValidDriverLicence || data.wantsUpgrade !== 'Yes') data.targetCode = '';
+
+    // Declining contact permission also clears contact and marketing choices.
+    if (data.contactConsent !== 'Yes') {
+      data.contactMethods = [];
+      data.marketingConsent = false;
+    }
     // Enforce the licence journey on the server as well as in the frontend.
     const hasValidDriverLicence = data.licenceStage === "Valid driver's licence";
     data.hasDriversLicence = hasValidDriverLicence ? 'Yes' : 'No';
