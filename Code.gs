@@ -90,15 +90,6 @@ function doPost(e) {
       data.contactMethods = [];
       data.marketingConsent = false;
     }
-    // Enforce the licence journey on the server as well as in the frontend.
-    const hasValidDriverLicence = data.licenceStage === "Valid driver's licence";
-    data.hasDriversLicence = hasValidDriverLicence ? 'Yes' : 'No';
-    if (!hasValidDriverLicence) data.wantsUpgrade = '';
-    if (!hasValidDriverLicence || data.wantsUpgrade !== 'Yes') data.targetCode = '';
-    if (data.contactConsent !== 'Yes') {
-      data.contactMethods = [];
-      data.marketingConsent = false;
-    }
     if (data.ageGroup === 'Under 18' && (!data.guardianName || !data.guardianPhone || !data.guardianConsent)) {
       throw new Error('Parent or guardian permission is required for respondents under 18.');
     }
